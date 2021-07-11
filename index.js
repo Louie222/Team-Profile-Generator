@@ -53,7 +53,18 @@ inquirer
 .then(answers => {
     let manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerContactNumber)
     teamMembers.push(manager);
-    evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
+    if(answers.additionalTeamMember === "Engineer")
+    {
+        addEngineer();
+    }else if (answers.additionalTeamMember === "Intern")
+    {
+        addIntern();
+    }else
+    {
+        generateHTML();
+    }
+    
+    //evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
 })   
 .catch(error => {
     if (error.isTtyError) {
@@ -156,16 +167,7 @@ function addIntern()
     .then(answers => {
         let intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool );
         teamMembers.push(intern);
-        if (answers.additionalTeamMember === "Engineer")
-        {
-            addEngineer ();
-        }else if (answers.additionalTeamMember === "Intern")
-        {
-            addIntern();
-        }else
-        {
-            generateHTML();
-        }
+        evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
     
     })
     .catch(error => {
@@ -174,6 +176,20 @@ function addIntern()
     
         }
     });
+}
+
+function evaluateAdditionalTeamMemberResult(result)
+{
+    if (result === "Engineer")
+        {
+            addEngineer ();
+        }else if (result === "Intern")
+        {
+            addIntern();
+        }else
+        {
+            generateHTML();
+        }
 }
 
 function generateHTML ()
