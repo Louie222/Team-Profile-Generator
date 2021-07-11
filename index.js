@@ -24,23 +24,88 @@ inquirer
         name: "managerName",
         type: "input",
         message: "Enter your team manager's name", 
-
     },
+
     {
-        name: "employeeId",
+        name: "employeeID",
         type: "input",
         message: "Enter your employee ID",
-
     },
+
     {
         name: "email",
         type: "input",
-        message: "What is your e-mail address?"
+        message: "What is your e-mail address?",
+    },
 
+    {
+        name: "contactNumber",
+        type: "input",
+        message: "What is your best contact number?",
     },
     {
-        name: ""
-    }
-
+        name: "additionalTeamMember",
+        type: "list",
+        message: "Select team members to add",
+        choices: ["Engineer", "Intern"],
+    },
 ])
+.then(answers => {
+    fs.writeFileSync(generatedHtmlFilePath, "");
+
+})
+.catch(error => {
+    if (error.isTtyError) {
+    } else {
+
+    }
+}),
+
+function additionalTeamMembers()
+{
+    inquirer
+    .prompt([
+        {
+            name: "managerName",
+            type: "input",
+            message: "Enter your team manager's name", 
+        },
+    
+        {
+            name: "employeeID",
+            type: "input",
+            message: "Enter your employee ID",
+        },
+    
+        {
+            name: "email",
+            type: "input",
+            message: "What is your e-mail address?",
+        },
+    
+        {
+            name: "contactNumber",
+            type: "input",
+            message: "What is your best contact number?",
+        },
+        {
+            name: "additionalTeamMember",
+            type: "list",
+            message: "Select team members to add",
+            choices: ["Engineer", "Intern"],
+        },
+    ])
+    .then(answers => {
+        fs.writeFileSync(generatedHtmlFilePath, "");
+    
+    })
+    .catch(error => {
+        if (error.isTtyError) {
+        } else {
+    
+        }
+    }),
+}
+
+
 
