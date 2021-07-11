@@ -52,19 +52,9 @@ inquirer
 ])
 .then(answers => {
     let manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerContactNumber)
-    teamMembers.push(manager); 
-    if(answers.additionalTeamMember === "Engineer")
-    {
-        addEngineer();
-    }else if(answers.additionalTeamMember === "Intern")
-    {
-        addIntern();
-    }else 
-    {
-        generateHTML();
-    }
-
-})
+    teamMembers.push(manager);
+    evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
+})   
 .catch(error => {
     if (error.isTtyError) {
     } else {
@@ -95,9 +85,9 @@ function addEngineer()
         },
     
         {
-            name: "engineerContactNumber",
+            name: "engineerGitHub",
             type: "input",
-            message: "What is your engineer's contact number?",
+            message: "What is your engineer's GitHub account?",
         },
         {
             name: "additionalTeamMember",
@@ -107,7 +97,7 @@ function addEngineer()
         },
     ])
     .then(answers => {
-        let engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerContactNumber);
+        let engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGitHub);
         teamMembers.push(engineer);
         if (answers.additionalTeamMember === "Engineer")
         {
