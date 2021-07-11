@@ -27,21 +27,21 @@ inquirer
     },
 
     {
-        name: "employeeID",
+        name: "managerID",
         type: "input",
-        message: "Enter your employee ID",
+        message: "Enter your manager's ID",
     },
 
     {
-        name: "email",
+        name: "managerEmail",
         type: "input",
-        message: "What is your e-mail address?",
+        message: "What is your manager's e-mail address?",
     },
 
     {
-        name: "contactNumber",
+        name: "managerContactNumber",
         type: "input",
-        message: "What is your best contact number?",
+        message: "What is your manager's contact number?",
     },
     {
         name: "additionalTeamMember",
@@ -51,7 +51,18 @@ inquirer
     },
 ])
 .then(answers => {
-    fs.writeFileSync(generatedHtmlFilePath, "");
+    let manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerContactNumber)
+    teamMembers.push(manager); 
+    if(answers.additionalTeamMember === "Engineer")
+    {
+        addEngineer();
+    }else if(answers.additionalTeamMember === "Intern")
+    {
+        addIntern();
+    }else 
+    {
+        generateHTML();
+    }
 
 })
 .catch(error => {
@@ -66,27 +77,27 @@ function addEngineer()
     inquirer
     .prompt([
         {
-            name: "internName",
+            name: "engineerName",
             type: "input",
-            message: "Enter your intern's name", 
+            message: "Enter your engineer's name", 
         },
     
         {
-            name: "internID",
+            name: "engineerID",
             type: "input",
-            message: "Enter your intern's ID",
+            message: "Enter your engineer's ID",
         },
     
         {
-            name: "internEmail",
+            name: "engineerEmail",
             type: "input",
-            message: "What is your intern's e-mail address?",
+            message: "What is your engineer's e-mail address?",
         },
     
         {
-            name: "internSchool",
+            name: "engineerContactNumber",
             type: "input",
-            message: "What is your intern's school?",
+            message: "What is your engineer's contact number?",
         },
         {
             name: "additionalTeamMember",
@@ -96,8 +107,8 @@ function addEngineer()
         },
     ])
     .then(answers => {
-        let intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool );
-        teamMembers.push(intern);
+        let engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerContactNumber);
+        teamMembers.push(engineer);
         if (answers.additionalTeamMember === "Engineer")
         {
             addEngineer ();
@@ -177,7 +188,7 @@ function addIntern()
 
 function generateHTML ()
 {
-
+    fs.writeFileSync(generatedHtmlFilePath, "");
 }
 
 
