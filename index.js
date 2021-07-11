@@ -61,42 +61,53 @@ inquirer
     }
 }),
 
-function additionalTeamMembers()
+function addEngineer()
 {
     inquirer
     .prompt([
         {
-            name: "managerName",
+            name: "internName",
             type: "input",
-            message: "Enter your team manager's name", 
+            message: "Enter your intern's name", 
         },
     
         {
-            name: "employeeID",
+            name: "internID",
             type: "input",
-            message: "Enter your employee ID",
+            message: "Enter your intern's ID",
         },
     
         {
-            name: "email",
+            name: "internEmail",
             type: "input",
-            message: "What is your e-mail address?",
+            message: "What is your intern's e-mail address?",
         },
     
         {
-            name: "contactNumber",
+            name: "internSchool",
             type: "input",
-            message: "What is your best contact number?",
+            message: "What is your intern's school?",
         },
         {
             name: "additionalTeamMember",
             type: "list",
             message: "Select team members to add",
-            choices: ["Engineer", "Intern"],
+            choices: ["Engineer", "Intern", "Exit"]
         },
     ])
     .then(answers => {
-        fs.writeFileSync(generatedHtmlFilePath, "");
+        let intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool );
+        teamMembers.push(intern);
+        if (answers.additionalTeamMember === "Engineer")
+        {
+            addEngineer ();
+        }else if (answers.additionalTeamMember === "Intern")
+        {
+            addIntern();
+        }else
+        {
+            generateHTML();
+        }
     
     })
     .catch(error => {
@@ -104,7 +115,69 @@ function additionalTeamMembers()
         } else {
     
         }
-    }),
+    });
+}
+
+function addIntern()
+{
+    inquirer
+    .prompt([
+        {
+            name: "internName",
+            type: "input",
+            message: "Enter your intern's name", 
+        },
+    
+        {
+            name: "internID",
+            type: "input",
+            message: "Enter your intern's ID",
+        },
+    
+        {
+            name: "internEmail",
+            type: "input",
+            message: "What is your intern's e-mail address?",
+        },
+    
+        {
+            name: "internSchool",
+            type: "input",
+            message: "What is your intern's school?",
+        },
+        {
+            name: "additionalTeamMember",
+            type: "list",
+            message: "Select team members to add",
+            choices: ["Engineer", "Intern", "Exit"]
+        },
+    ])
+    .then(answers => {
+        let intern = new Intern(answers.internName, answers.internID, answers.internEmail, answers.internSchool );
+        teamMembers.push(intern);
+        if (answers.additionalTeamMember === "Engineer")
+        {
+            addEngineer ();
+        }else if (answers.additionalTeamMember === "Intern")
+        {
+            addIntern();
+        }else
+        {
+            generateHTML();
+        }
+    
+    })
+    .catch(error => {
+        if (error.isTtyError) {
+        } else {
+    
+        }
+    });
+}
+
+function generateHTML ()
+{
+
 }
 
 
