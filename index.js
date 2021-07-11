@@ -7,6 +7,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 
 const generatedHtmlFilePath = './dist/TeamProfile.html'
+let teamMembers = [];
 
 // THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
 // WHEN I enter the team manager’s name, employee ID, email address, and office number
@@ -53,19 +54,8 @@ inquirer
 .then(answers => {
     let manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerContactNumber)
     teamMembers.push(manager);
-    if(answers.additionalTeamMember === "Engineer")
-    {
-        addEngineer();
-    }else if (answers.additionalTeamMember === "Intern")
-    {
-        addIntern();
-    }else
-    {
-        generateHTML();
-    }
-    
-    //evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
-})   
+    evaluateAdditionalTeamMemberResult(choices.additionalTeamMember);
+}) 
 .catch(error => {
     if (error.isTtyError) {
     } else {
@@ -110,16 +100,7 @@ function addEngineer()
     .then(answers => {
         let engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGitHub);
         teamMembers.push(engineer);
-        if (answers.additionalTeamMember === "Engineer")
-        {
-            addEngineer ();
-        }else if (answers.additionalTeamMember === "Intern")
-        {
-            addIntern();
-        }else
-        {
-            generateHTML();
-        }
+        evaluateAdditionalTeamMemberResult(answers.additionalTeamMember);
     
     })
     .catch(error => {
